@@ -1,7 +1,7 @@
 # Решение домашнего задания к занятию «Организация сети»
 https://github.com/netology-code/clopro-homeworks/blob/main/15.1.md
 
-## Состояни инфраструктуры после применения
+## Состояние инфраструктуры после применения
 ### ВМ
 ![image](https://github.com/user-attachments/assets/2eaa701f-cc65-4aca-8a23-5a8cfff44306)
 ### Сеть
