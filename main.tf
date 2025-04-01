@@ -68,6 +68,7 @@ resource "yandex_compute_instance" "public_instance" {
   }
 
   metadata = {
+    #ssh-keys = local.ssh_key
     user-data    = data.template_file.cloudinit.rendered
   }
 }
@@ -122,6 +123,7 @@ resource "yandex_compute_instance" "private_instance" {
 
 
   metadata = {
+    #ssh-keys = local.ssh_key
     user-data    = data.template_file.cloudinit.rendered
   }
 
