@@ -30,5 +30,6 @@ host bastion
 ### Проверяем доступ в интернет
 ![image](https://github.com/user-attachments/assets/36f83cee-6da0-48e6-a4d6-e39b47bde5ce)
 
-
+### Основня работа терраформа здесь
+https://github.com/pkostua/cloud-1/blob/master/main.tf
 
