@@ -62,3 +62,8 @@ variable "vm_default_memory" {
   default     = 2
 }
 
+variable "app_port" {
+  type        = number
+  default     = 80
+}
+

@@ -1,0 +1,14 @@
+#cloud-config
+datasource:
+  Ec2:
+    strict_id: false
+ssh_pwauth: no
+write_files:
+  - path: "/usr/local/etc/startup.sh"
+    permissions: "755"
+    content: |
+      #!/bin/bash
+      echo "<img src='https://storage.yandexcloud.net/${bucket_name}/image.jpg'/>" > /var/www/html/index.html
+    defer: true
+runcmd:
+  - ["/usr/local/etc/startup.sh"]

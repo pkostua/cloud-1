@@ -10,7 +10,7 @@ resource "yandex_vpc_subnet" "public" {
   network_id     = yandex_vpc_network.develop.id
   v4_cidr_blocks = var.public_cidr
 }
-
+/*
 #2.2 Создать в этой подсети NAT-инстанс, присвоив ему адрес 192.168.10.254. В качестве image_id использовать fd80mrhj8fl2oe87o4e1.
 resource "yandex_compute_instance" "nat_instance" {
   name        = var.vm_nat_instance_name
@@ -68,8 +68,8 @@ resource "yandex_compute_instance" "public_instance" {
   }
 
   metadata = {
-    #ssh-keys = local.ssh_key
-    user-data    = data.template_file.cloudinit.rendered
+    ssh-keys = "ubuntu: ${local.ssh_key}"
+
   }
 }
 
@@ -123,8 +123,8 @@ resource "yandex_compute_instance" "private_instance" {
 
 
   metadata = {
-    #ssh-keys = local.ssh_key
-    user-data    = data.template_file.cloudinit.rendered
+    ssh-keys = "ubuntu: ${local.ssh_key}"
+
   }
 
-}
+}*/
