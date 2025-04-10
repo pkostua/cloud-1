@@ -13,11 +13,14 @@ https://github.com/netology-code/clopro-homeworks/blob/main/15.1.md
 Разместить в стартовой веб-странице шаблонной ВМ ссылку на картинку из бакета.
 Настроить проверку состояния ВМ.
 
-### Состояние облако после применения
+### Состояние облака после применения
 ВМ  
 ![image](https://github.com/user-attachments/assets/4dad20c2-7f38-4f8c-83d8-325163325167)  
 Балансировщик  
 ![image](https://github.com/user-attachments/assets/deb4f01b-cabc-4398-a9c7-8f7c59c0f486)  
-Проверка доступности  
+Проверка доступности приложения  
+![image](https://github.com/user-attachments/assets/0bd95a40-1318-4b63-92d8-2f3a78b37f59)
+
+
 
 
