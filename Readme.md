@@ -31,7 +31,7 @@ https://github.com/pkostua/cloud-1/blob/cloud-2/nlb.tf
 ### Проверить работоспособность, удалив одну или несколько ВМ.
 Остановили 2 ВМ из трех
 ![image](https://github.com/user-attachments/assets/ba1ba386-88d2-4d8f-a9b3-e5703d43a514)  
-В группе балансировки осталас 1 ВМ  
+В группе балансировки осталась 1 ВМ  
 ![image](https://github.com/user-attachments/assets/406f2ecc-e8e6-459b-b433-ba37685b22d0)  
 Пока не опомнился наблюдатель, быстро проверяем доступность
 ![image](https://github.com/user-attachments/assets/04e26a5d-78b4-4fd9-9837-56bee747157e)  
