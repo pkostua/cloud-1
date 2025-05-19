@@ -13,3 +13,6 @@ data "template_file" "lamp_cloudinit" {
     bucket_name = var.bucket-name
   }
 }
+
+
+

@@ -1,4 +1,4 @@
-module "lamp-group-sa" {
+/*module "lamp-group-sa" {
   source = "./sa"
   folder_id = var.folder_id
   name = "${var.lamp_group_name}-admin"
@@ -75,3 +75,4 @@ resource "yandex_compute_instance_group" "lamp_group_instance" {
 }
 
 
+*/

@@ -1,4 +1,4 @@
-resource "yandex_lb_network_load_balancer" "lb" {
+/*resource "yandex_lb_network_load_balancer" "lb" {
   depends_on          = [yandex_compute_instance_group.lamp_group_instance]
   count               = 1
   name                = "nlb-${var.lamp_group_name}"
@@ -21,4 +21,4 @@ resource "yandex_lb_network_load_balancer" "lb" {
       }
     }
   }
-}
+}*/
