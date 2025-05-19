@@ -2,14 +2,14 @@
 https://github.com/netology-code/clopro-homeworks/blob/main/15.3.md
 
 ## С помощью ключа в KMS необходимо зашифровать содержимое бакета:
- - создать ключ в KMS;  
-   ```
+### создать ключ в KMS;  
+```
    resource "yandex_kms_symmetric_key" "key-kms" {
   name              = var.bucket-name
   description       = "Key for encrypt bucket ${var.bucket-name}"
 }
-   ```
-- с помощью ключа зашифровать содержимое бакета, созданного ранее.
+```
+### с помощью ключа зашифровать содержимое бакета, созданного ранее.
 ```
 resource "yandex_storage_bucket" "image-bucket" {
   ....
