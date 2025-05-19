@@ -1,25 +1,94 @@
-# Решение домашнего задания к занятию «Организация сети»
-https://github.com/netology-code/clopro-homeworks/blob/main/15.1.md
+# Домашнее задание к занятию «Безопасность в облачных провайдерах»
+https://github.com/netology-code/clopro-homeworks/blob/main/15.3.md
 
-## Создание бакета, загрузка картинки
-### Картинка доступна по адресу https://storage.yandexcloud.net/pkostua-20250409/image.jpg
-![image](https://github.com/user-attachments/assets/d91cc5df-b9e2-4230-9e98-2cf8a28e24ba)
+## С помощью ключа в KMS необходимо зашифровать содержимое бакета:
+ - создать ключ в KMS;  
+   ```
+   resource "yandex_kms_symmetric_key" "key-kms" {
+  name              = var.bucket-name
+  description       = "Key for encrypt bucket ${var.bucket-name}"
+}
+   ```
+- с помощью ключа зашифровать содержимое бакета, созданного ранее.
+```
+resource "yandex_storage_bucket" "image-bucket" {
+  ....
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        kms_master_key_id = yandex_kms_symmetric_key.key-kms.id
+        sse_algorithm     = "aws:kms"
+      }
+    }
+  }
+```
+## Создать статический сайт в Object Storage c собственным публичным адресом и сделать доступным по HTTPS
+1. Идем к регистратору домена и пердаем управление yandex.cloud. В моем случае домен pkdp.ru
+2. Добавляем в терраформ ресуксы управления доменом и сертифкатом, связываем сертификат со статическим сайтом
+```
+...
+resource "yandex_storage_bucket" "image-bucket" {
+  ...
+  website {
+    index_document = "index.html"
+  }
+  https {
+    certificate_id = data.yandex_cm_certificate.example.id
+  }
+}
 
+resource "yandex_storage_object" "html" {
+  bucket     = yandex_storage_bucket.image-bucket.bucket
+  access_key = module.bucket-sa.access_key
+  secret_key = module.bucket-sa.secret_key
+  acl        = "public-read"
+  key        = var.html-key
+  source     = var.html-path
+  tags = {
+    type = var.html-tag
+  }
+}
 
-## Создать группу ВМ в public подсети фиксированного размера с шаблоном LAMP и веб-страницей, содержащей ссылку на картинку из бакета:
+resource "yandex_cm_certificate" "le-certificate" {
+  name    = "${var.dns-zone-name}-le-cert"
+  domains = ["${var.dns-name}"]
+  managed {
+    challenge_type = "DNS_CNAME"
+  }
+}
 
-Создать Instance Group с тремя ВМ и шаблоном LAMP. Для LAMP рекомендуется использовать image_id = fd827b91d99psvq5fjit.
-Для создания стартовой веб-страницы рекомендуется использовать раздел user_data в meta_data.
-Разместить в стартовой веб-странице шаблонной ВМ ссылку на картинку из бакета.
-Настроить проверку состояния ВМ.
+resource "yandex_dns_recordset" "validation-record" {
+  zone_id = yandex_dns_zone.zone1.id
+  name    = yandex_cm_certificate.le-certificate.challenges[0].dns_name
+  type    = yandex_cm_certificate.le-certificate.challenges[0].dns_type
+  data    = [yandex_cm_certificate.le-certificate.challenges[0].dns_value]
+  ttl     = 600
+}
 
-### Состояние облака после применения
-ВМ  
-![image](https://github.com/user-attachments/assets/4dad20c2-7f38-4f8c-83d8-325163325167)  
-Балансировщик  
-![image](https://github.com/user-attachments/assets/deb4f01b-cabc-4398-a9c7-8f7c59c0f486)  
-Проверка доступности приложения  
-![image](https://github.com/user-attachments/assets/0bd95a40-1318-4b63-92d8-2f3a78b37f59)
+data "yandex_cm_certificate" "example" {
+  depends_on      = [yandex_dns_recordset.validation-record]
+  certificate_id  = yandex_cm_certificate.le-certificate.id
+}
+
+resource "yandex_dns_zone" "zone1" {
+  name        = "${var.dns-zone-name}"
+  zone        = "${var.dns-name}."
+  public      = true
+}
+
+resource "yandex_dns_recordset" "rs2" {
+  zone_id = yandex_dns_zone.zone1.id
+  name    = "${var.dns-name}."
+  type    = "ANAME"
+  ttl     = 600
+  data    = ["${var.bucket-name}.website.yandexcloud.net"]
+}
+```  
+Весь файл доступен здесь https://github.com/pkostua/cloud-1/blob/master/s3.tf
+
+Статический сайт с сертификатом letsencrypt
+![image](https://github.com/user-attachments/assets/3be0d744-fd40-4d92-a5de-ab83c92fe4b9)
+
 
 
 
