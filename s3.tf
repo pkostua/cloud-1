@@ -100,5 +100,5 @@ resource "yandex_dns_recordset" "rs2" {
   name    = "${var.dns-name}."
   type    = "ANAME"
   ttl     = 600
-  data    = ["${var.bucket-name}.website.yandexcloud.net"]
+  data    = ["${var.dns-name}.website.yandexcloud.net"]
 }
